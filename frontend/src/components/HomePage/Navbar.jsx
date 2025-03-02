@@ -1,11 +1,5 @@
 import { motion } from "framer-motion";
-import {
-  HeartIcon,
-  XMarkIcon,
-  Bars3Icon,
-  ArrowRightIcon,
-  ChevronDownIcon,
-} from "@heroicons/react/24/outline";
+import { HeartIcon, XMarkIcon, Bars3Icon, ArrowRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -55,7 +49,7 @@ const Navbar = () => {
   };
 
   return (
-    <motion.nav
+    <motion.nav 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
@@ -64,15 +58,15 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/">
-            <motion.a
-              whileHover={{ scale: 1.05, color: "#3B82F6" }}
-              className="text-gray-600 hover:text-blue-600 font-medium transition-colors"
-            >
-              <HeartIcon className="h-10 w-10 mr-2" />
-              <span className="hidden md:inline">Heart Stroke Prediction</span>
-            </motion.a>
-          </Link>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center space-x-2"
+          >
+            <HeartIcon className="h-8 w-8 text-red-500" />
+            <span className="text-2xl font-bold text-blue-800">
+              CardioCare<span className="text-red-500">AI</span>
+            </span>
+          </motion.div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -93,9 +87,7 @@ const Navbar = () => {
                   onClick={toggleMenu}
                   className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors"
                 >
-                  <span>
-                    Hi, {user?.first_name} {user?.last_name}
-                  </span>
+                  <span>Hi, {user?.first_name} {user?.last_name}</span>
                   <ChevronDownIcon className="h-4 w-4" />
                 </button>
 
