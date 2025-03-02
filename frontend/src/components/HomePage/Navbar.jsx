@@ -58,15 +58,14 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-2"
-          >
-            <HeartIcon className="h-8 w-8 text-red-500" />
-            <span className="text-2xl font-bold text-blue-800">
-              CardioCare<span className="text-red-500">AI</span>
-            </span>
-          </motion.div>
+          <Link to="/" className="flex items-center space-x-2">
+            <motion.div whileHover={{ scale: 1.05 }}>
+              <HeartIcon className="h-8 w-8 text-red-500" />
+              <span className="text-2xl font-bold text-blue-800">
+                CardioCare<span className="text-red-500">AI</span>
+              </span>
+            </motion.div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -172,7 +171,7 @@ const Navbar = () => {
                 </button>
               </div>
             ) : (
-              <Link to="/get-started">
+              <Link to="/login-register">
                 <button className="w-full bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 flex items-center space-x-2">
                   <ArrowRightIcon className="h-5 w-5" />
                   Get Started
