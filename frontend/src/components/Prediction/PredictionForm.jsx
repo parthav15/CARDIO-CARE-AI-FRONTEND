@@ -5,7 +5,6 @@ import {
   InformationCircleIcon, 
   ArrowPathIcon,
   UserIcon,
-  BloodDropIcon,
   ChartBarIcon,
   LightningBoltIcon,
   ScaleIcon,
@@ -163,7 +162,7 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
       label: "Cholesterol Level",
       unit: "mg/dl",
       help: "Serum cholesterol in mg/dl (126-564)",
-      icon: BloodDropIcon,
+      icon: ChartBarIcon,
       suggestions: [200, 240, 280, 320]
     },
     fbs: {
