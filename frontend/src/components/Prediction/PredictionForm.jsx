@@ -1,7 +1,74 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HeartIcon, InformationCircleIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
-import { toast } from "react-toastify";
+import { 
+  HeartIcon, 
+  InformationCircleIcon, 
+  ArrowPathIcon,
+  UserIcon,
+  HeartPulseIcon,
+  BloodDropIcon,
+  ChartBarIcon,
+  LightningBoltIcon,
+  ScaleIcon,
+  TrendingUpIcon,
+  IdentificationIcon,
+  ClipboardListIcon,
+  BeakerIcon
+} from "@heroicons/react/24/outline";
+
+const OptionCard = ({ label, description, value, isSelected, onClick }) => (
+  <motion.div
+    onClick={onClick}
+    className={`p-6 rounded-xl border-2 cursor-pointer transition-all
+      ${isSelected ? 'border-blue-500 bg-blue-900/30' : 'border-white/20 hover:border-blue-400/50'}
+    `}
+    whileHover={{ scale: 1.02 }}
+  >
+    <h3 className="text-lg font-semibold text-white mb-2">{label}</h3>
+    <p className="text-sm text-gray-300">{description}</p>
+    <div className="mt-4 text-xs text-blue-400">
+      {isSelected ? '✓ Selected' : 'Click to select'}
+    </div>
+  </motion.div>
+);
+
+const NumericalInput = ({ label, unit, help, value, onChange, suggestions }) => (
+  <div className="space-y-4">
+    <div className="flex items-center gap-2 text-white">
+      <span className="font-medium">{label}</span>
+      {unit && <span className="text-sm text-gray-400">({unit})</span>}
+    </div>
+    
+    <div className="flex gap-3 flex-wrap">
+      <input
+        type="number"
+        value={value}
+        onChange={onChange}
+        className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg
+                 focus:outline-none focus:border-blue-400 text-white"
+        placeholder={`Enter ${label}`}
+      />
+      
+      {suggestions && (
+        <div className="flex gap-2 flex-wrap">
+          {suggestions.map((suggestion) => (
+            <button
+              key={suggestion}
+              type="button"
+              onClick={() => onChange({ target: { value: suggestion } })}
+              className="px-3 py-1.5 text-sm bg-white/5 rounded-lg hover:bg-white/10
+                       border border-white/20 text-gray-300"
+            >
+              {suggestion}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+
+    {help && <p className="text-sm text-gray-400 mt-2">{help}</p>}
+  </div>
+);
 
 const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
   const [formData, setFormData] = useState({
@@ -36,72 +103,208 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
       label: "Age",
       unit: "years",
       help: "Enter your age in years (29-77)",
+      icon: UserIcon,
+      suggestions: [30, 45, 60, 75]
     },
-    sex: { 
-      label: "Sex", 
-      options: ["I don't know", "Female", "Male"], 
-      help: "Biological sex" 
+    sex: {
+      label: "Biological Sex",
+      icon: IdentificationIcon,
+      options: [
+        {
+          value: 0,
+          label: "Prefer not to say",
+          description: "Keep this information private"
+        },
+        {
+          value: 1,
+          label: "Female",
+          description: "Assigned female at birth"
+        },
+        {
+          value: 2,
+          label: "Male",
+          description: "Assigned male at birth"
+        }
+      ]
     },
     cp: {
       label: "Chest Pain Type",
+      icon: HeartPulseIcon,
       options: [
-        "I don't know",
-        "Typical Angina",
-        "Atypical Angina",
-        "Non-anginal Pain",
-        "Asymptomatic",
-      ],
-      help: "Type of chest pain experienced",
+        {
+          value: 1,
+          label: "Typical Angina",
+          description: "Chest pain related to decreased blood flow to the heart"
+        },
+        {
+          value: 2,
+          label: "Atypical Angina",
+          description: "Chest pain not typical of heart disease"
+        },
+        {
+          value: 3,
+          label: "Non-anginal Pain",
+          description: "Chest pain not caused by reduced blood flow"
+        },
+        {
+          value: 4,
+          label: "Asymptomatic",
+          description: "No chest pain symptoms"
+        }
+      ]
     },
     trestbps: {
-      label: "Resting BP",
+      label: "Resting Blood Pressure",
       unit: "mm Hg",
-      help: "Resting blood pressure (94-200)",
+      help: "Your blood pressure at rest (94-200)",
+      icon: ScaleIcon,
+      suggestions: [120, 140, 160, 180]
     },
     chol: {
-      label: "Cholesterol",
+      label: "Cholesterol Level",
       unit: "mg/dl",
-      help: "Serum cholesterol (126-564)",
+      help: "Serum cholesterol in mg/dl (126-564)",
+      icon: BloodDropIcon,
+      suggestions: [200, 240, 280, 320]
     },
     fbs: {
       label: "Fasting Blood Sugar",
-      options: ["I don't know", "< 120 mg/dl", "> 120 mg/dl"],
-      help: "Fasting blood sugar level",
+      icon: BeakerIcon,
+      options: [
+        {
+          value: 0,
+          label: "Not sure",
+          description: "I don't know my fasting blood sugar"
+        },
+        {
+          value: 1,
+          label: "Normal (< 120 mg/dl)",
+          description: "Fasting blood sugar below 120 mg/dl"
+        },
+        {
+          value: 2,
+          label: "High (> 120 mg/dl)",
+          description: "Fasting blood sugar above 120 mg/dl"
+        }
+      ]
     },
     restecg: {
       label: "Resting ECG",
-      options: ["I don't know", "Normal", "ST-T Abnormality", "Left Ventricular Hypertrophy"],
-      help: "Resting electrocardiographic results",
+      icon: ChartBarIcon,
+      options: [
+        {
+          value: 0,
+          label: "Not sure",
+          description: "I don't know my ECG results"
+        },
+        {
+          value: 1,
+          label: "Normal",
+          description: "Normal resting electrocardiogram"
+        },
+        {
+          value: 2,
+          label: "ST-T Abnormality",
+          description: "Abnormal ST-T wave changes"
+        },
+        {
+          value: 3,
+          label: "LV Hypertrophy",
+          description: "Left ventricular hypertrophy"
+        }
+      ]
     },
     thalach: {
       label: "Max Heart Rate",
       unit: "bpm",
-      help: "Maximum heart rate achieved (71-202)",
+      help: "Highest heart rate achieved (71-202)",
+      icon: LightningBoltIcon,
+      suggestions: [120, 150, 180, 200]
     },
     exang: {
       label: "Exercise Angina",
-      options: ["I don't know", "No", "Yes"],
-      help: "Exercise induced angina",
+      icon: RunningIcon,
+      options: [
+        {
+          value: 0,
+          label: "Not sure",
+          description: "I don't know if I have exercise-induced angina"
+        },
+        {
+          value: 1,
+          label: "No",
+          description: "No chest pain during exercise"
+        },
+        {
+          value: 2,
+          label: "Yes",
+          description: "Experience chest pain during exercise"
+        }
+      ]
     },
     oldpeak: {
       label: "ST Depression",
       unit: "mm",
       help: "ST depression induced by exercise (0-6.2)",
+      icon: TrendingUpIcon,
+      suggestions: [1.0, 2.0, 3.0, 4.0]
     },
     slope: {
       label: "ST Slope",
-      options: ["I don't know", "Upsloping", "Flat", "Downsloping"],
-      help: "Slope of peak exercise ST segment",
+      icon: ClipboardListIcon,
+      options: [
+        {
+          value: 0,
+          label: "Not sure",
+          description: "I don't know my ST slope results"
+        },
+        {
+          value: 1,
+          label: "Upsloping",
+          description: "Upward sloping ST segment"
+        },
+        {
+          value: 2,
+          label: "Flat",
+          description: "Flat ST segment"
+        },
+        {
+          value: 3,
+          label: "Downsloping",
+          description: "Downward sloping ST segment"
+        }
+      ]
     },
     ca: {
       label: "Major Vessels",
       help: "Number of major vessels (0-4) colored by flourosopy",
+      suggestions: [0, 1, 2, 3, 4]
     },
     thal: {
       label: "Thalassemia",
-      options: ["I don't know", "Normal", "Fixed Defect", "Reversible Defect"],
-      help: "Thalassemia test result",
-    },
+      options: [
+        {
+          value: 0,
+          label: "Not sure",
+          description: "I don't know my thalassemia results"
+        },
+        {
+          value: 1,
+          label: "Normal",
+          description: "Normal blood flow"
+        },
+        {
+          value: 2,
+          label: "Fixed Defect",
+          description: "Permanent blood flow defect"
+        },
+        {
+          value: 3,
+          label: "Reversible Defect",
+          description: "Temporary blood flow defect"
+        }
+      ]
+    }
   };
 
   const stepVariants = {
@@ -140,12 +343,46 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
     setCurrentStep(newStep);
   };
 
+  const renderField = (field) => {
+    const config = fieldDetails[field];
+    
+    if (config.options) {
+      return (
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 text-white mb-4">
+            <config.icon className="h-5 w-5 text-blue-400" />
+            <h3 className="font-medium">{config.label}</h3>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {config.options.map((option) => (
+              <OptionCard
+                key={option.value}
+                label={option.label}
+                description={option.description}
+                isSelected={formData[field] == option.value}
+                onClick={() => setFormData({ ...formData, [field]: option.value })}
+              />
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <NumericalInput
+        label={config.label}
+        unit={config.unit}
+        help={config.help}
+        value={formData[field]}
+        onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+        suggestions={config.suggestions}
+      />
+    );
+  };
+
   return (
-    <motion.div
-      className="bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10 relative"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
+    <motion.div className="bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10 relative">
       <AnimatePresence>
         {loading && (
           <motion.div
@@ -180,13 +417,12 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
           exit={{ opacity: 0, height: 0 }}
         >
           <p className="text-gray-300 text-sm">
-            Please provide accurate medical information for the best prediction
-            results. All data is securely processed and never stored.
+            Please provide accurate medical information for the best prediction results. All data is securely processed and never stored.
           </p>
         </motion.div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
         <AnimatePresence mode="wait" custom={stepDirection}>
           <motion.div
             key={currentStep}
@@ -196,60 +432,11 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="space-y-8"
           >
             {fieldGroups[currentStep].map((field) => (
-              <div key={field} className="space-y-2">
-                <label className="block text-gray-300 text-sm">
-                  {fieldDetails[field].label}
-                  {fieldDetails[field].unit && (
-                    <span className="text-gray-400 ml-2">
-                      ({fieldDetails[field].unit})
-                    </span>
-                  )}
-                </label>
-
-                {fieldDetails[field].options ? (
-                  <select
-                    name={field}
-                    value={formData[field]}
-                    onChange={(e) =>
-                      setFormData({ ...formData, [field]: e.target.value })
-                    }
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-blue-400 text-white"
-                  >
-                    <option value="" style={{ backgroundColor: "#1A202C" }}>
-                      Select {fieldDetails[field].label}
-                    </option>
-                    {fieldDetails[field].options.map((opt, idx) => (
-                      <option
-                        key={opt}
-                        value={idx === 0 ? 0 : idx}
-                        style={{ backgroundColor: "#1A202C" }}
-                      >
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  <input
-                    type="number"
-                    name={field}
-                    value={formData[field]}
-                    onChange={(e) =>
-                      setFormData({ ...formData, [field]: e.target.value })
-                    }
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-blue-400 text-white"
-                    placeholder={`Enter ${fieldDetails[field].label}`}
-                    step={field === "oldpeak" ? "0.1" : "1"}
-                    min={field === "ca" ? 0 : undefined}
-                    max={field === "ca" ? 4 : undefined}
-                  />
-                )}
-
-                <p className="text-gray-400 text-xs">
-                  {fieldDetails[field].help}
-                </p>
+              <div key={field} className="space-y-6">
+                {renderField(field)}
               </div>
             ))}
           </motion.div>
