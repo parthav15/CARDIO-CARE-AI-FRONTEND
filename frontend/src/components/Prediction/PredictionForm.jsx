@@ -7,7 +7,6 @@ import {
   UserIcon,
   ChartBarIcon,
   ScaleIcon,
-  TrendingUpIcon,
   IdentificationIcon,
   ClipboardListIcon,
   BeakerIcon
@@ -243,7 +242,7 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
       label: "ST Depression",
       unit: "mm",
       help: "ST depression induced by exercise (0-6.2)",
-      icon: TrendingUpIcon,
+      icon: UserIcon,
       suggestions: [1.0, 2.0, 3.0, 4.0]
     },
     slope: {
