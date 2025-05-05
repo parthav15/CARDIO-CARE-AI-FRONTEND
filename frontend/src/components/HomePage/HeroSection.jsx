@@ -53,12 +53,11 @@ const HeroSection = () => {
             transition={{ delay: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-              Get Started
-            </button>
-            <button className="border-2 border-white/20 hover:border-blue-400 text-white px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:text-blue-400">
-              Learn More
-            </button>
+            <a href='/login-register'>
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                Get Started
+              </button>
+            </a>
           </motion.div>
         </motion.div>
       </div>
