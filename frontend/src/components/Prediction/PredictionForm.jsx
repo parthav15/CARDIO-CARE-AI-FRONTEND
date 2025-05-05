@@ -8,7 +8,6 @@ import {
   ClockIcon,
   ScaleIcon,
   ChartBarIcon,
-  LightningBoltIcon,
   IdentificationIcon
 } from "@heroicons/react/24/outline";
 
@@ -220,7 +219,7 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
       label: "Max Heart Rate",
       unit: "bpm",
       help: "Highest heart rate achieved (71-202)",
-      icon: LightningBoltIcon,
+      icon: UserIcon,
       suggestions: [120, 150, 180, 200]
     },
     exang: {
