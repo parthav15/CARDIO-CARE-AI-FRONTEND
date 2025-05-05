@@ -5,10 +5,11 @@ import {
   InformationCircleIcon, 
   ArrowPathIcon,
   UserIcon,
-  ChartBarIcon,
+  ClockIcon,
   ScaleIcon,
-  IdentificationIcon,
-  BeakerIcon
+  ChartBarIcon,
+  LightningBoltIcon,
+  IdentificationIcon
 } from "@heroicons/react/24/outline";
 
 const OptionCard = ({ label, description, value, isSelected, onClick }) => (
@@ -63,6 +64,12 @@ const NumericalInput = ({ label, unit, help, value, onChange, suggestions }) => 
 
     {help && <p className="text-sm text-gray-400 mt-2">{help}</p>}
   </div>
+);
+
+const DefaultIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+  </svg>
 );
 
 const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
@@ -124,7 +131,7 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
     },
     cp: {
       label: "Chest Pain Type",
-      icon: IdentificationIcon,
+      icon: HeartIcon,
       options: [
         {
           value: 1,
@@ -159,12 +166,12 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
       label: "Cholesterol Level",
       unit: "mg/dl",
       help: "Serum cholesterol in mg/dl (126-564)",
-      icon: ChartBarIcon,
+      icon: ClockIcon,
       suggestions: [200, 240, 280, 320]
     },
     fbs: {
       label: "Fasting Blood Sugar",
-      icon: BeakerIcon,
+      icon: InformationCircleIcon,
       options: [
         {
           value: 0,
@@ -213,12 +220,12 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
       label: "Max Heart Rate",
       unit: "bpm",
       help: "Highest heart rate achieved (71-202)",
-      icon: UserIcon,
+      icon: LightningBoltIcon,
       suggestions: [120, 150, 180, 200]
     },
     exang: {
       label: "Exercise Angina",
-      icon: UserIcon,
+      icon: HeartIcon,
       options: [
         {
           value: 0,
@@ -241,12 +248,12 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
       label: "ST Depression",
       unit: "mm",
       help: "ST depression induced by exercise (0-6.2)",
-      icon: UserIcon,
+      icon: ScaleIcon,
       suggestions: [1.0, 2.0, 3.0, 4.0]
     },
     slope: {
       label: "ST Slope",
-      icon: UserIcon,
+      icon: ChartBarIcon,
       options: [
         {
           value: 0,
@@ -277,6 +284,7 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
     },
     thal: {
       label: "Thalassemia",
+      icon: InformationCircleIcon,
       options: [
         {
           value: 0,
@@ -340,12 +348,13 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
 
   const renderField = (field) => {
     const config = fieldDetails[field];
+    const IconComponent = config?.icon || DefaultIcon;
     
-    if (config.options) {
+    if (config?.options) {
       return (
         <div className="space-y-4">
           <div className="flex items-center gap-2 text-white mb-4">
-            <config.icon className="h-5 w-5 text-blue-400" />
+            <IconComponent className="h-5 w-5 text-blue-400" />
             <h3 className="font-medium">{config.label}</h3>
           </div>
           
@@ -366,12 +375,12 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
 
     return (
       <NumericalInput
-        label={config.label}
-        unit={config.unit}
-        help={config.help}
+        label={config?.label || field}
+        unit={config?.unit}
+        help={config?.help}
         value={formData[field]}
         onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
-        suggestions={config.suggestions}
+        suggestions={config?.suggestions}
       />
     );
   };
