@@ -115,7 +115,7 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <Link to="/get-started">
+              <Link to="/login-register">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors flex items-center space-x-2"
