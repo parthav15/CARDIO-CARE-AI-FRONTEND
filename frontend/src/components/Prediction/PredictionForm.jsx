@@ -8,7 +8,6 @@ import {
   ChartBarIcon,
   ScaleIcon,
   IdentificationIcon,
-  ClipboardListIcon,
   BeakerIcon
 } from "@heroicons/react/24/outline";
 
@@ -247,7 +246,7 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
     },
     slope: {
       label: "ST Slope",
-      icon: ClipboardListIcon,
+      icon: UserIcon,
       options: [
         {
           value: 0,
