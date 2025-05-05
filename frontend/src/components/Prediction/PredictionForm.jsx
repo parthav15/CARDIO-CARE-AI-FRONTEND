@@ -218,7 +218,7 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
     },
     exang: {
       label: "Exercise Angina",
-      icon: RunningIcon,
+      icon: UserIcon,
       options: [
         {
           value: 0,
