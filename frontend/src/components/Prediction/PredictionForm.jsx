@@ -5,7 +5,6 @@ import {
   InformationCircleIcon, 
   ArrowPathIcon,
   UserIcon,
-  HeartPulseIcon,
   BloodDropIcon,
   ChartBarIcon,
   LightningBoltIcon,
@@ -129,7 +128,7 @@ const PredictionForm = ({ onSubmit, predictionResult, loading }) => {
     },
     cp: {
       label: "Chest Pain Type",
-      icon: HeartPulseIcon,
+      icon: IdentificationIcon,
       options: [
         {
           value: 1,
